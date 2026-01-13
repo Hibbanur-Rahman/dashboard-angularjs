@@ -1,13 +1,13 @@
 import { Component, inject } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
-import { Router } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { AuthService } from "../../../core/services/auth/auth.service";
 
 
 @Component({
     selector:'app-login',
-    imports: [ReactiveFormsModule, CommonModule],
+    imports: [ReactiveFormsModule, CommonModule,RouterLink],
     templateUrl:'./login.html',
     styleUrl:'./login.css'
 })
@@ -63,6 +63,13 @@ export class Login {
             Object.keys(this.loginForm.controls).forEach(key => {
                 this.loginForm.controls[key].markAsTouched();
             });
+        }
+    }
+
+    ngOnInit(){
+        console.log("Component initialized. Current loading state:", this.isLoading);
+        if(localStorage.getItem('auth_token')){
+            this.router.navigate(['/dashboard']);
         }
     }
 }
