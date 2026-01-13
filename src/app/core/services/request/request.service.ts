@@ -22,7 +22,7 @@ export class RequestService {
     private http = inject(HttpClient);
     
     // Base API URL from environment
-    private baseUrl = environment.apiUrl;
+    private baseUrl =environment.apiUrl;
     
     Request<T = any>(options: RequestOptions){
         // Build full URL
@@ -43,20 +43,15 @@ export class RequestService {
         // Execute request based on method
         switch (options.method) {
             case 'GET':
-                this.http.get<T>(url, httpOptions);
-                break;
+                return this.http.get<T>(url, httpOptions);
             case 'POST':
-                this.http.post<T>(url, options.data, httpOptions);
-                break;
+                return this.http.post<T>(url, options.data, httpOptions);
             case 'PUT':
-                this.http.put<T>(url, options.data, httpOptions);
-                break;
+                return this.http.put<T>(url, options.data, httpOptions);
             case 'PATCH':
-                this.http.patch<T>(url, options.data, httpOptions);
-                break;
+                return this.http.patch<T>(url, options.data, httpOptions);
             case 'DELETE':
-                this.http.delete<T>(url, httpOptions);
-                break;
+                return this.http.delete<T>(url, httpOptions);
             default:
                 throw new Error(`Unsupported HTTP method: ${options.method}`);
         }

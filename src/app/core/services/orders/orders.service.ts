@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
 import { RequestService } from '../request/request.service';
-import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
