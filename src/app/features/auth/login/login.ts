@@ -1,26 +1,35 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, PLATFORM_ID } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
 import { Router, RouterLink } from "@angular/router";
-import { CommonModule } from "@angular/common";
+import { CommonModule, isPlatformBrowser } from "@angular/common";
 import { AuthService } from "../../../core/services/auth/auth.service";
-
+import { Eye, EyeClosed, EyeOff, FileIcon, LucideAngularModule } from 'lucide-angular'
 
 @Component({
+    standalone: true,
     selector:'app-login',
-    imports: [ReactiveFormsModule, CommonModule,RouterLink],
+    imports: [ReactiveFormsModule, CommonModule,RouterLink, LucideAngularModule],
     templateUrl:'./login.html',
-    styleUrl:'./login.css'
 })
 export class Login {
+    // Icons
+    readonly FileIcon=FileIcon;
+    readonly EyeIcon=Eye;
+    readonly EyeOffIcon=EyeOff;
+
+    // Dependency injections
     private fb = inject(FormBuilder);
     private router = inject(Router);
     private authService = inject(AuthService);
+    private platformId = inject(PLATFORM_ID);
+    private isBrowser = isPlatformBrowser(this.platformId);
     
-    
+    // Component properties
     loginForm: FormGroup;
     showPassword = false;
     isLoading = false;
     
+    // Constructor
     constructor() {
         this.loginForm = this.fb.group({
             email: ['', [Validators.required, Validators.email]],
@@ -32,6 +41,7 @@ export class Login {
         this.showPassword = !this.showPassword;
     }
     
+    // Form submission handler
     onSubmit() {
         if (this.loginForm.valid) {
             this.isLoading = true;
@@ -46,7 +56,7 @@ export class Login {
                 next: (response) => {
                     console.log('Login response:', response);
                     // Store token
-                    if (response.data.access_token) {
+                    if (response.data.access_token && this.isBrowser) {
                         localStorage.setItem('auth_token', response.data.access_token);
                     }
                     // Navigate to dashboard
@@ -66,9 +76,10 @@ export class Login {
         }
     }
 
+    // Lifecycle hook
     ngOnInit(){
         console.log("Component initialized. Current loading state:", this.isLoading);
-        if(localStorage.getItem('auth_token')){
+        if(this.isBrowser && localStorage.getItem('auth_token')){
             this.router.navigate(['/dashboard']);
         }
     }
