@@ -3,19 +3,34 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from "@angula
 import { Router, RouterLink } from "@angular/router";
 import { CommonModule, isPlatformBrowser } from "@angular/common";
 import { AuthService } from "../../../core/services/auth/auth.service";
-import { Eye, EyeClosed, EyeOff, FileIcon, LucideAngularModule } from 'lucide-angular'
+import { Eye, EyeOff, Lock, Mail, LogIn, LucideAngularModule } from 'lucide-angular';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from "primeng/api";
 
 @Component({
     standalone: true,
     selector:'app-login',
-    imports: [ReactiveFormsModule, CommonModule,RouterLink, LucideAngularModule],
+    imports: [
+        ReactiveFormsModule, 
+        CommonModule,
+        RouterLink, 
+        LucideAngularModule,
+        InputTextModule,
+        ButtonModule,
+        ToastModule
+    ],
     templateUrl:'./login.html',
+    providers:[MessageService]
 })
 export class Login {
     // Icons
-    readonly FileIcon=FileIcon;
     readonly EyeIcon=Eye;
     readonly EyeOffIcon=EyeOff;
+    readonly LockIcon=Lock;
+    readonly MailIcon=Mail;
+    readonly LogInIcon=LogIn;
 
     // Dependency injections
     private fb = inject(FormBuilder);
@@ -28,6 +43,7 @@ export class Login {
     loginForm: FormGroup;
     showPassword = false;
     isLoading = false;
+    private messageService = inject(MessageService);
     
     // Constructor
     constructor() {
@@ -63,6 +79,11 @@ export class Login {
                     this.router.navigate(['/dashboard']);
                 },
                 error: (error) => {
+                    this.messageService.add({
+                        severity:'error', 
+                        summary: 'Login Failed',
+                        detail: error.error.message || 'An error occurred during login.'
+                    });
                     console.error('Login error:', error);
                     this.isLoading = false;
                     console.log("loading state:", this.isLoading);

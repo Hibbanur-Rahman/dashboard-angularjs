@@ -1,90 +1,89 @@
-<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4 py-12">
+<div class="min-h-screen flex items-center justify-center px-4 py-12 relative bg-cover bg-center bg-no-repeat" style="background-image: url('/assets/images/login-bg.webp');">
+
+
+    <!-- Login Card -->
     <div class="max-w-md w-full">
-        <!-- Card -->
-        <div class="bg-white rounded-2xl shadow-xl p-8">
+        <div class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-10">
+            <!-- Icon -->
+            <div class="flex justify-center mb-6">
+                <div class="w-16 h-16 bg-gray-100 rounded-3xl flex items-center justify-center">
+                    <i-lucide [img]="LogInIcon" [size]="28" class="text-gray-700"></i-lucide>
+                </div>
+            </div>
+
             <!-- Header -->
             <div class="text-center mb-8">
-                <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-                <p class="text-gray-600">Sign in to your account</p>
+                <h1 class="text-2xl font-bold text-gray-900 mb-2">Sign in with email</h1>
+                <p class="text-gray-600 text-sm">Make a new doc to bring your words, data,<br>and teams together. For free</p>
             </div>
             
             <!-- Form -->
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
-                <!-- Email Field -->
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
+                <!-- Email Field with PrimeNG -->
                 <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-                        Email Address
-                    </label>
-                    <input
-                        id="email"
-                        type="email"
-                        formControlName="email"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none"
-                        [class.border-red-500]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
-                        placeholder="you@example.com"
-                    />
-                    <p *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" 
-                       class="mt-1 text-sm text-red-600">
+                    <span class="w-full relative">
+                        <i-lucide [img]="MailIcon" [size]="18" class="text-gray-400 absolute left-2 top-1/2 -translate-y-1/2 z-10"></i-lucide>
+                        <input 
+                            pInputText 
+                            id="email" 
+                            type="email" 
+                            formControlName="email"
+                            placeholder="Email"
+                            class="w-full pl-10! text-sm border border-gray-200 rounded-3xl! focus:ring-2 focus:ring-blue-400 focus:border-transparent transition duration-200 bg-gray-50"
+                            [ngClass]="{'border-red-400': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
+                        />
+                    </span>
+                    <small *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-red-600 block mt-1">
                         <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required</span>
                         <span *ngIf="loginForm.get('email')?.errors?.['email']">Please enter a valid email</span>
-                    </p>
+                    </small>
                 </div>
                 
-                <!-- Password Field -->
+                <!-- Password Field with PrimeNG -->
                 <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
-                        Password
-                    </label>
-                    <div class="relative">
-                        <input
-                            id="password"
+                    <span class="w-full relative">
+                        <i-lucide [img]="LockIcon" [size]="18" class="text-gray-400 absolute left-2 top-1/2 -translate-y-1/2 z-10"></i-lucide>
+                        <input 
+                            pInputText
+                            id="password" 
                             [type]="showPassword ? 'text' : 'password'"
                             formControlName="password"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none pr-12"
-                            [class.border-red-500]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
-                            placeholder="••••••••"
+                            placeholder="Password"
+                            class="w-full pl-10! pr-12 py-3 text-sm border border-gray-200 rounded-3xl! focus:ring-2 focus:ring-blue-400 focus:border-transparent transition duration-200 bg-gray-50"
+                            [ngClass]="{'border-red-400': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
                         />
                         <button
                             type="button"
                             (click)="togglePasswordVisibility()"
-                            class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 z-10"
                         >
-
-                            <i-lucide *ngIf="!showPassword" [img]="EyeIcon" [size]="20"></i-lucide>
-                            <i-lucide *ngIf="showPassword" [img]="EyeOffIcon" [size]="20"></i-lucide>
+                            <i-lucide *ngIf="!showPassword" [img]="EyeOffIcon" [size]="18"></i-lucide>
+                            <i-lucide *ngIf="showPassword" [img]="EyeIcon" [size]="18"></i-lucide>
                         </button>
-                    </div>
-                    <p *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" 
-                       class="mt-1 text-sm text-red-600">
+                    </span>
+                    <small *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-red-600 block mt-1">
                         <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</span>
                         <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters</span>
-                    </p>
+                    </small>
+                </div>
+
+                <!-- Forgot Password -->
+                <div class="text-right">
+                    <a href="#" class="text-sm text-gray-700 hover:text-gray-900">Forgot password?</a>
                 </div>
                 
                 <!-- Submit Button -->
                 <button
+                    pButton
                     type="submit"
                     [disabled]="isLoading"
-                    class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
-                >
-                    <span *ngIf="!isLoading">Sign In</span>
-                    <span *ngIf="isLoading" class="flex items-center">
-                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Signing in...
-                    </span>
-                </button>
+                    [loading]="isLoading"
+                    label="Get Started"
+                    class="w-full bg-gray-900 text-white py-3 px-4 rounded-3xl! font-medium hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                ></button>
             </form>
-            
-            <!-- Footer -->
-            <div class="mt-6 text-center">
-                <p class="text-sm text-gray-600">
-                    Don't have an account? 
-                    <a routerLink="/register" class="text-blue-600 hover:text-blue-700 font-medium">Sign up</a>
-                </p>
-            </div>
+          
         </div>
     </div>
+    <p-toast/>
 </div>
