@@ -1,32 +1,105 @@
-<div class="h-screen w-full bg-gray-100 flex items-center justify-center">
-    <div class="rounded-3xl border border-gray-200 p-4 bg-white h-auto w-[400px] shadow-md space-y-2">
-        <h2 class="text-2xl font-bold text-center mb-4">Create an Account</h2>
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4">
-            <div class="">
-                <label for="email">Email</label>
-                <input id="email" name="email" formControlName="email" type="email" placeholder="Enter your email"
-                    class="w-full border border-gray-300 rounded-3xl p-2" />
+<div class="min-h-screen flex items-center justify-center px-4 py-12 relative bg-cover bg-center bg-no-repeat" style="background-image: url('/assets/images/login-bg.webp');">
+
+    <!-- Register Card -->
+    <div class="max-w-md w-full">
+        <div class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-10">
+            <!-- Icon -->
+            <div class="flex justify-center mb-6">
+                <div class="w-16 h-16 bg-gray-100 rounded-3xl flex items-center justify-center">
+                    <i-lucide [img]="UserPlusIcon" [size]="28" class="text-gray-700"></i-lucide>
+                </div>
             </div>
-            <div class="">
-                <label for="username">Username</label>
-                <input id="username" name="username" formControlName="name" type="text"
-                    placeholder="Enter your username" class="w-full border border-gray-300 rounded-3xl p-2" />
+
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h1 class="text-2xl font-bold text-gray-900 mb-2">Create an Account</h1>
+                <p class="text-gray-600 text-sm">Join us to bring your words, data,<br>and teams together. For free</p>
             </div>
-            <div class="">
-                <label for="password">Password</label>
-                <input id="password" name="password" formControlName="password" type="password"
-                    placeholder="Enter your password" class="w-full border border-gray-300 rounded-3xl p-2" />
-            </div>
-            <button *ngIf="!isloading" type="submit"
-                class="w-full bg-blue-600 rounded-3xl p-2 text-white text-lg">Register</button>
-        </form>
-        <div *ngIf="isloading" class="text-center text-blue-600 mt-2 rounded-2xl border border-gray-200 p-2">
-            Registering...</div>
-        <div class="text-center mt-4">
-            <p class="text-gray-600">Already have an account?
-                <a routerLink="/login" class="text-blue-600 hover:underline">Login here</a>
-            </p>
+            
+            <!-- Form -->
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4">
+                <!-- Name Field with PrimeNG -->
+                <div>
+                    <span class="w-full relative">
+                        <i-lucide [img]="UserIcon" [size]="18" class="text-gray-400 absolute left-2 top-1/2 -translate-y-1/2 z-10"></i-lucide>
+                        <input 
+                            pInputText 
+                            id="name" 
+                            type="text" 
+                            formControlName="name"
+                            placeholder="Username"
+                            class="w-full pl-10! text-sm border border-gray-200 rounded-3xl! focus:ring-2 focus:ring-blue-400 focus:border-transparent transition duration-200 bg-gray-50"
+                            [ngClass]="{'border-red-400': registerForm.get('name')?.invalid && registerForm.get('name')?.touched}"
+                        />
+                    </span>
+                    <small *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched" class="text-red-600 block mt-1">
+                        <span *ngIf="registerForm.get('name')?.errors?.['required']">Username is required</span>
+                    </small>
+                </div>
+
+                <!-- Email Field with PrimeNG -->
+                <div>
+                    <span class="w-full relative">
+                        <i-lucide [img]="MailIcon" [size]="18" class="text-gray-400 absolute left-2 top-1/2 -translate-y-1/2 z-10"></i-lucide>
+                        <input 
+                            pInputText 
+                            id="email" 
+                            type="email" 
+                            formControlName="email"
+                            placeholder="Email"
+                            class="w-full pl-10! text-sm border border-gray-200 rounded-3xl! focus:ring-2 focus:ring-blue-400 focus:border-transparent transition duration-200 bg-gray-50"
+                            [ngClass]="{'border-red-400': registerForm.get('email')?.invalid && registerForm.get('email')?.touched}"
+                        />
+                    </span>
+                    <small *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-red-600 block mt-1">
+                        <span *ngIf="registerForm.get('email')?.errors?.['required']">Email is required</span>
+                        <span *ngIf="registerForm.get('email')?.errors?.['email']">Please enter a valid email</span>
+                    </small>
+                </div>
+                
+                <!-- Password Field with PrimeNG -->
+                <div>
+                    <span class="w-full relative">
+                        <i-lucide [img]="LockIcon" [size]="18" class="text-gray-400 absolute left-2 top-1/2 -translate-y-1/2 z-10"></i-lucide>
+                        <input 
+                            pInputText
+                            id="password" 
+                            [type]="showPassword ? 'text' : 'password'"
+                            formControlName="password"
+                            placeholder="Password"
+                            class="w-full pl-10! pr-12 py-3 text-sm border border-gray-200 rounded-3xl! focus:ring-2 focus:ring-blue-400 focus:border-transparent transition duration-200 bg-gray-50"
+                            [ngClass]="{'border-red-400': registerForm.get('password')?.invalid && registerForm.get('password')?.touched}"
+                        />
+                        <button
+                            type="button"
+                            (click)="togglePasswordVisibility()"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 z-10"
+                        >
+                            <i-lucide *ngIf="!showPassword" [img]="EyeOffIcon" [size]="18"></i-lucide>
+                            <i-lucide *ngIf="showPassword" [img]="EyeIcon" [size]="18"></i-lucide>
+                        </button>
+                    </span>
+                    <small *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-red-600 block mt-1">
+                        <span *ngIf="registerForm.get('password')?.errors?.['required']">Password is required</span>
+                        <span *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters</span>
+                    </small>
+                </div>
+                
+                <!-- Submit Button -->
+                <button
+                    pButton
+                    type="submit"
+                    [disabled]="isloading"
+                    [loading]="isloading"
+                    label="Create Account"
+                    class="w-full bg-gray-900 text-white py-3 px-4 rounded-3xl! font-medium hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                ></button>
+
+                <div class="flex items-center justify-center">
+                    <p>Already have an account? <a [routerLink]="['/login']" class="text-blue-600 hover:underline">Sign in</a></p>
+                </div>
+            </form>
         </div>
     </div>
-
+    <p-toast/>
 </div>

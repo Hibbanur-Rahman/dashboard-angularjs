@@ -1,6 +1,6 @@
 import { Component, inject, PLATFORM_ID } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
-import { Router, RouterLink } from "@angular/router";
+import { Router,  RouterModule } from "@angular/router";
 import { CommonModule, isPlatformBrowser } from "@angular/common";
 import { AuthService } from "../../../core/services/auth/auth.service";
 import { Eye, EyeOff, Lock, Mail, LogIn, LucideAngularModule } from 'lucide-angular';
@@ -15,7 +15,7 @@ import { MessageService } from "primeng/api";
     imports: [
         ReactiveFormsModule, 
         CommonModule,
-        RouterLink, 
+        RouterModule,
         LucideAngularModule,
         InputTextModule,
         ButtonModule,
