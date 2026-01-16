@@ -1,0 +1,30 @@
+/* Submenu nested styles with Tailwind */
+::ng-deep .submenu-item a {
+    padding-left: 3.25rem !important;
+}
+
+::ng-deep .submenu-item a:hover {
+    padding-left: 3.5rem !important;
+}
+
+::ng-deep .submenu-item .submenu-item a {
+    padding-left: 4.5rem !important;
+}
+
+::ng-deep .submenu-item .submenu-item a:hover {
+    padding-left: 4.75rem !important;
+}
+
+/* Custom scrollbar */
+:host ::ng-deep ::-webkit-scrollbar {
+    width: 6px;
+}
+
+:host ::ng-deep ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+:host ::ng-deep ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}

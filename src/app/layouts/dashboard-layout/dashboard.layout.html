@@ -1,4 +1,9 @@
-<div class="flex flex-row ">
-    <app-sidebar></app-sidebar>
-    <router-outlet />
+<div class="flex flex-row! w-full! h-full! bg-gray-100">
+    <div class="w-64! h-screen rounded-r-[2rem] border border-gray-300 bg-white">
+        <app-sidebar></app-sidebar>
+    </div>
+    <div class="flex-1 h-full!">
+        <router-outlet />
+    </div>
+
 </div>

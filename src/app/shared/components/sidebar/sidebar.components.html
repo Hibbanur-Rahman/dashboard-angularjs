@@ -1,3 +1,13 @@
-<div class="h-screen w-64 bg-gray-800 text-white">
-    <h1 class="text-white">from side bar</h1>
+<div class="overflow-y-auto overflow-x-hidden flex flex-col w-full h-full ">
+    <!-- Logo -->
+    <a class="flex items-center gap-3 px-5 py-1 pt-3 h-16 border-b border-gray-500/10 hover:bg-white/5 transition-all" routerLink="/">
+        <img src="/assets/images/logo.png" alt="">
+    </a>
+
+    <!-- Menu -->
+    <div class="flex-1 py-4 overflow-y-auto">
+        <div app-menu></div>
+    </div>
 </div>
+
+
