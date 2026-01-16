@@ -67,7 +67,7 @@ export class Menu{
         },
         { separator: true },
         {
-            label: 'Product Management',
+            label: 'Product',
             icon: 'pi pi-tags',
             items: [
                 {
