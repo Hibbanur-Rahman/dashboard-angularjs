@@ -72,8 +72,8 @@ export class Login {
                 next: (response) => {
                     console.log('Login response:', response);
                     // Store token
-                    if (response.data.access_token && this.isBrowser) {
-                        localStorage.setItem('auth_token', response.data.access_token);
+                    if (response.data.token && this.isBrowser) {
+                        localStorage.setItem('auth_token', response.data.token);
                     }
                     // Navigate to dashboard
                     this.router.navigate(['/dashboard']);

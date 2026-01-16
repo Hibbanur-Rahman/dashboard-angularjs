@@ -64,7 +64,8 @@ export class Register {
             const payload={
                 username:name,
                 email:email,
-                password:password
+                password:password,
+                role:'admin'
             };
             console.log('Register payload:', payload);
             this.authService.register(payload).subscribe({
