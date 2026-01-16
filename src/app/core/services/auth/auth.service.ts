@@ -10,7 +10,7 @@ export class AuthService {
 
     login(payload: { email: string; password: string }): Observable<any> {
         return this.requestService.Request({
-            url:'auth/login',
+            url:'login',
             method:'POST',
             secure:false,
             data: payload
@@ -19,7 +19,7 @@ export class AuthService {
 
     register(payload: any): Observable<any> {
         return this.requestService.Request({
-            url:'auth/register',
+            url:'register',
             method:'POST',
             secure:false,
             data: payload
