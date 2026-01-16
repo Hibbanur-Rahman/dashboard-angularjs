@@ -67,6 +67,48 @@ export class Menu{
         },
         { separator: true },
         {
+            label: 'Product Management',
+            icon: 'pi pi-tags',
+            items: [
+                {
+                    label: 'All Products',
+                    icon: 'pi pi-fw pi-list',
+                    routerLink: ['/products']
+                },
+                {
+                    label: 'Add Product',
+                    icon: 'pi pi-fw pi-plus',
+                    routerLink: ['/products/add']
+                },
+                {
+                    label: 'Categories',
+                    icon: 'pi pi-fw pi-folder',
+                    routerLink: ['/products/categories']
+                },
+                {
+                    label: 'Brands',
+                    icon: 'pi pi-fw pi-bookmark',
+                    routerLink: ['/products/brands']
+                },
+                {
+                    label: 'Attributes',
+                    icon: 'pi pi-fw pi-sliders-h',
+                    routerLink: ['/products/attributes']
+                },
+                {
+                    label: 'Product Reviews',
+                    icon: 'pi pi-fw pi-star',
+                    routerLink: ['/products/reviews']
+                },
+                {
+                    label: 'Import/Export',
+                    icon: 'pi pi-fw pi-upload',
+                    routerLink: ['/products/import-export']
+                }
+            ]
+        },
+        { separator: true },
+        {
             label: 'Orders',
             icon: 'pi pi-shopping-cart',
             items: [

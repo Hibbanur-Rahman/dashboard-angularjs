@@ -15,7 +15,7 @@ import { Subscription } from "rxjs";
                 {{ item.label }}
             </div>
             <a *ngIf="(!item.routerLink || item.items) && item.visible !== false" 
-               [attr.href]="item.url" 
+               [attr.href]="item.url || null" 
                (click)="itemClick($event)"
                [ngClass]="item.class" 
                [attr.target]="item.target" 
@@ -48,7 +48,7 @@ import { Subscription } from "rxjs";
 
             <ul *ngIf="item.items && item.visible !== false" [@children]="submenuAnimation" class="list-none m-0 p-0 overflow-hidden">
                 <ng-template ngFor let-child let-i="index" [ngForOf]="item.items">
-                    <li app-menuitem [item]="child" [index]="i" [parentKey]="key" [class]="'submenu-item'" [class.active-menuitem]="activeIndex === i"></li>
+                    <li app-menuitem [item]="child" [index]="i" [parentKey]="key" [class]="'submenu-item'" [class.active-menuitem]="activeIndex === i" ></li>
                 </ng-template>
             </ul>
         </ng-container>
@@ -104,17 +104,20 @@ export class MenuItem implements OnInit, OnDestroy {
     }
 
     itemClick(event: Event) {
+        console.log('MenuItem clicked:', this.item);
         if (this.item.disabled) {
             event.preventDefault();
             return;
         }
 
-        if (this.item.command) {
-            this.item.command({ originalEvent: event, item: this.item });
+        // Prevent default if item has subitems (expand/collapse only)
+        if (this.item.items) {
+            event.preventDefault();
+            this.active = !this.active;
         }
 
-        if (this.item.items) {
-            this.active = !this.active;
+        if (this.item.command) {
+            this.item.command({ originalEvent: event, item: this.item });
         }
 
         if (!this.item.items && (this.item.routerLink || this.item.url)) {
